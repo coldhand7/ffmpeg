@@ -74,6 +74,7 @@ RUN      buildDeps="autoconf \
                     python \
                     libssl-dev \
                     yasm \
+                    libasound2-dev \
                     zlib1g-dev" && \
         apt-get -yqq update && \
         apt-get install -yq --no-install-recommends ${buildDeps}
@@ -333,6 +334,7 @@ RUN \
         --disable-debug \
         --disable-doc \
         --disable-ffplay \
+	--enable-indev=alsa \
         --enable-shared \
         --enable-avresample \
         --enable-libopencore-amrnb \
@@ -380,6 +382,8 @@ RUN \
 
 FROM        base AS release
 MAINTAINER  Julien Rottenberg <julien@rottenberg.info>
+
+RUN apt-get -y install libasound2-dev
 
 CMD         ["--help"]
 ENTRYPOINT  ["ffmpeg"]
